@@ -1,5 +1,6 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
+require("dotenv").config();
 
 async function startServer() {
     const app = express();
