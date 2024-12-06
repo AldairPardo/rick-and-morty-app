@@ -1,40 +1,46 @@
 import express from "express";
-import { ApolloServer } from "apollo-server-express";
+import { ApolloServer, gql } from "apollo-server-express";
 import connection from "./database/config/dbConnection";
+import { readFileSync } from "fs";
+import path from "path";
+import resolvers from "./resolvers/CharacterResolver";
+
 require("dotenv").config();
 
 async function startServer() {
-    const app = express();
-    const PORT = process.env.PORT || 4000;
-    const server = new ApolloServer({
-        typeDefs: `
-        type Query {
-        hello: String
-        }
-    `,
-        resolvers: {
-            Query: {
-                hello: () => "Hello world!",
-            },
-        },
-    });
+  const app = express();
+  const PORT = process.env.PORT || 4000;
 
-    await server.start();
-    server.applyMiddleware({ app, path: "/graphql" });
+  const typeDefs = gql(
+    readFileSync(
+      path.join(__dirname, "schemas", "characterSchema.graphql"),
+      "utf-8"
+    )
+  );
 
-    (async () => {
-        try {
-            await connection.authenticate();
-            console.log("Database connection established successfully.");
-        } catch (error) {
-            console.error("Unable to connect to the database:", error);
-        }
-    })();
+  const server = new ApolloServer(
+    {
+      typeDefs,
+      resolvers
+    }
+  );
 
-    app.use(express.json());
-    app.listen(PORT, () => {
-        console.log(`Server is running on http://localhost:${PORT}/graphql`);
-    });
+  await server.start();
+  server.applyMiddleware({ app, path: "/graphql" });
+
+  (async () => {
+    try {
+      await connection.authenticate();
+      console.log("Database connection established successfully.");
+    } catch (error) {
+      console.error("Unable to connect to the database:", error);
+    }
+  })();
+
+  app.use(express.json());
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}/graphql`);
+  });
 }
 
 startServer();
