@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import connection from "../config/dbConnection";
+import { getCharacters } from "../../services/apiService";
 
 const Character = connection.define("Character", {
     id: {
@@ -29,5 +30,21 @@ const Character = connection.define("Character", {
         allowNull: true,
     },
 });
+
+async function initializeCharacters() {
+    const characters = await getCharacters(1);
+    if (characters.length > 0) {
+        for (const character of characters) {
+            await Character.upsert(character);
+        }
+        console.log("Characters updated successfully.");
+    } else {
+        console.log("No characters found to update.");
+    }
+}
+
+(async () => {
+    await initializeCharacters();
+})();
 
 export default Character;

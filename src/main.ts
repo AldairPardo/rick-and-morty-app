@@ -4,6 +4,7 @@ import connection from "./database/config/dbConnection";
 import { readFileSync } from "fs";
 import path from "path";
 import resolvers from "./resolvers/CharacterResolver";
+import requestLogger from "./middlewares/requestLogger";
 
 require("dotenv").config();
 
@@ -11,6 +12,9 @@ async function startServer() {
   const app = express();
   const PORT = process.env.PORT || 4000;
 
+  // Middleware for logging requests
+  app.use(requestLogger);
+  
   const typeDefs = gql(
     readFileSync(
       path.join(__dirname, "schemas", "characterSchema.graphql"),

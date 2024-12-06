@@ -13,6 +13,7 @@ const dbDialect = "mysql";
 const sequelizeConnection = new Sequelize(dbName, dbUsername, dbPassword, {
     host: dbHost,
     dialect: dbDialect,
+    logging: false,
 });
 
 export default sequelizeConnection;
