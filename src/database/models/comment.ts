@@ -31,20 +31,11 @@ Comment.init(
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
     },
     {
         sequelize: connection,
         modelName: "Comment",
+        timestamps: true,
     }
 );
 

@@ -49,6 +49,7 @@ class Character extends Model {
 }, {
     sequelize: connection,
     modelName: 'Character',
+    timestamps: true,
 });
 
 async function initializeCharacters() {
