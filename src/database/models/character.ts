@@ -28,7 +28,7 @@ const Character = connection.define("Character", {
     origin: {
         type: DataTypes.STRING,
         allowNull: true,
-    },
+    }
 });
 
 async function initializeCharacters() {

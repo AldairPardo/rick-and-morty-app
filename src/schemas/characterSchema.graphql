@@ -5,6 +5,13 @@ type Character {
     species: String
     gender: String
     origin: String
+    comments: [Comment]
+}
+
+type Comment {
+    id: Int!
+    characterId: Int!
+    comment: String!
 }
 
 type Query {
@@ -17,4 +24,8 @@ type Query {
         gender: String
         origin: String
     ): [Character]
+}
+
+type Mutation {
+    addComment(characterId: Int!, comment: String!): Comment
 }
