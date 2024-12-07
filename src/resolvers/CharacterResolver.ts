@@ -4,13 +4,10 @@ import { Op } from "sequelize";
 
 const resolvers = {
   Query: {
-    getAllCharacters: async () => {
-      return await Character.findAll({
+    getCharacterById: async (_: any, { id }: { id: number }) => {
+      return await Character.findByPk(id, {
         include: [{ model: Comment, as: "comments" }],
       });
-    },
-    getCharacterById: async (_: any, { id }: { id: number }) => {
-      return await Character.findByPk(id);
     },
     filterCharacters: async (_: any, {
       name,
@@ -42,16 +39,33 @@ const resolvers = {
       _: any,
       { characterId, comment }: { characterId: number; comment: string }
     ) => {
-      // Validar que el personaje existe
+      //Validate if the character exists
       const character = await Character.findByPk(characterId);
       if (!character) {
         throw new Error("Character not found");
       }
 
-      // Crear el comentario
+      // Create comment
       const newComment = await Comment.create({ characterId, comment });
       return newComment;
     },
+    toggleFavorite: async (
+      _: any,
+      { characterId }: { characterId: number }
+    ) => {
+      
+      //Validate if the character exists
+      const character = await Character.findByPk(characterId);
+      if (!character) {
+        throw new Error("Character not found");
+      }
+
+      // Change the value of isReferred
+      character.isReferred = character.isReferred ? false : true;
+      await character.save();
+      return character;
+    },
+
   },
 };
 

@@ -1,8 +1,20 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import connection from "../config/dbConnection";
 import { getCharacters } from "../../services/apiService";
 
-const Character = connection.define("Character", {
+class Character extends Model {
+    public id!: number;
+    public name!: string;
+    public status?: string;
+    public species?: string;
+    public gender?: string;
+    public origin?: string;
+    public isReferred?: boolean;
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
+}
+
+ Character.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -28,7 +40,15 @@ const Character = connection.define("Character", {
     origin: {
         type: DataTypes.STRING,
         allowNull: true,
-    }
+    },
+    isReferred: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+    },
+}, {
+    sequelize: connection,
+    modelName: 'Character',
 });
 
 async function initializeCharacters() {
@@ -44,6 +64,7 @@ async function initializeCharacters() {
 }
 
 (async () => {
+    await connection.sync();
     await initializeCharacters();
 })();
 

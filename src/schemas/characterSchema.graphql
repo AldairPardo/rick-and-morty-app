@@ -5,6 +5,7 @@ type Character {
     species: String
     gender: String
     origin: String
+    isReferred: Boolean
     comments: [Comment]
 }
 
@@ -15,7 +16,6 @@ type Comment {
 }
 
 type Query {
-    getAllCharacters: [Character]
     getCharacterById(id: Int!): Character
     filterCharacters(
         name: String
@@ -28,4 +28,5 @@ type Query {
 
 type Mutation {
     addComment(characterId: Int!, comment: String!): Comment
+    toggleFavorite(characterId: Int!): Character
 }
