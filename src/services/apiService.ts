@@ -16,6 +16,7 @@ interface CharacterDTO {
     location: {
         name: string;
     };
+    image: string;
 }
 
 export const getCharacters = async (page: number = 1) => {
@@ -32,6 +33,7 @@ export const getCharacters = async (page: number = 1) => {
                     gender: character.gender,
                     origin: character.origin.name,
                     location: character.location.name,
+                    image: character.image,
                 }))
             );
         return characters;

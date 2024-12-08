@@ -4,6 +4,7 @@ import { getCharacters } from "../../services/apiService";
 
 class Character extends Model {
     public id!: number;
+    public image?: string;
     public name!: string;
     public status?: string;
     public species?: string;
@@ -20,6 +21,10 @@ class Character extends Model {
         autoIncrement: true,
         primaryKey: true,
         allowNull: false,
+    },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     name: {
         type: DataTypes.STRING,
@@ -56,7 +61,12 @@ async function initializeCharacters() {
     const characters = await getCharacters(1);
     if (characters.length > 0) {
         for (const character of characters) {
-            await Character.upsert(character);
+            const characterExists = await Character.findByPk(character.id);
+            if(!!characterExists) {
+                await characterExists.update(character);
+            } else {
+                await Character.create(character);
+            }
         }
         console.log("Characters updated successfully.");
     } else {

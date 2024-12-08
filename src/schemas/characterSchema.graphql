@@ -1,5 +1,6 @@
 type Character {
     id: Int!
+    image: String
     name: String!
     status: String
     species: String
