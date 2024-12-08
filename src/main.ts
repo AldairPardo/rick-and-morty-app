@@ -5,6 +5,8 @@ import { readFileSync } from "fs";
 import path from "path";
 import resolvers from "./resolvers/CharacterResolver";
 import requestLogger from "./middlewares/requestLogger";
+import { initializeCharacters } from "./database/models/character";
+var cron = require('node-cron');
 
 require("dotenv").config();
 
@@ -40,6 +42,12 @@ async function startServer() {
       console.error("Unable to connect to the database:", error);
     }
   })();
+
+  // Configura el cron job para ejecutar initializeCharacters cada 12 horas
+  cron.schedule("0 */12 * * *", async () => {
+    console.log("Running cron job to initialize characters...");
+    initializeCharacters();
+  });
 
   app.use(express.json());
   app.listen(PORT, () => {

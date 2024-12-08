@@ -74,9 +74,6 @@ async function initializeCharacters() {
     }
 }
 
-(async () => {
-    await connection.sync();
-    await initializeCharacters();
-})();
+export { initializeCharacters };
 
 export default Character;
