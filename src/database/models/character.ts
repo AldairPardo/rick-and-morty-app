@@ -10,7 +10,7 @@ class Character extends Model {
     public species?: string;
     public gender?: string;
     public origin?: string;
-    public isReferred?: boolean;
+    public isFavorite?: boolean;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 }
@@ -46,7 +46,7 @@ class Character extends Model {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    isReferred: {
+    isFavorite: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,

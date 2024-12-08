@@ -6,7 +6,8 @@ const resolvers = {
   Query: {
     getCharacterById: async (_: any, { id }: { id: number }) => {
       return await Character.findByPk(id, {
-        include: [{ model: Comment, as: "comments" }],
+        include: [{ model: Comment, as: "comments"}],
+        order: [[{ model: Comment, as: "comments" }, 'createdAt', 'DESC']]
       });
     },
     filterCharacters: async (_: any, {
@@ -46,8 +47,8 @@ const resolvers = {
       }
 
       // Create comment
-      const newComment = await Comment.create({ characterId, comment });
-      return newComment;
+      await Comment.create({ characterId, comment });
+      return await Character.findByPk(characterId, { include: [{ model: Comment, as: "comments"}], order: [[{ model: Comment, as: "comments" }, 'createdAt', 'DESC']] });
     },
     toggleFavorite: async (
       _: any,
@@ -60,8 +61,8 @@ const resolvers = {
         throw new Error("Character not found");
       }
 
-      // Change the value of isReferred
-      character.isReferred = character.isReferred ? false : true;
+      // Change the value of isFavorite
+      character.isFavorite = character.isFavorite ? false : true;
       await character.save();
       return character;
     },

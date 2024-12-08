@@ -30,7 +30,7 @@ Comment.init(
         comment: {
             type: DataTypes.TEXT,
             allowNull: false,
-        },
+        }
     },
     {
         sequelize: connection,
