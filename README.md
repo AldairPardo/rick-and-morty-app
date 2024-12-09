@@ -51,6 +51,22 @@ This is a GraphQL API built with Express that allows searching for Rick and Mort
 4. Run migrations:
    ```bash
    npx sequelize-cli db:migrate
+   
+## **Prerequisites**  
+
+- **Redis**:  
+  The project uses Redis for caching. Ensure you have Redis installed and running locally or accessible on the specified host and port.  
+
+  Default Redis configuration:  
+  - **Host**: `localhost`  
+  - **Port**: `6379`  
+
+  To install Redis locally, follow the instructions for your operating system:  
+  - [Redis Installation Guide](https://redis.io/docs/getting-started/installation/)  
+
+  Start Redis with:  
+  ```bash
+  redis-server
 
 ## **Usage**
    ```bash
