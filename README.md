@@ -38,11 +38,17 @@ This is a GraphQL API built with Express that allows searching for Rick and Mort
    git clone https://github.com/AldairPardo/rick-and-morty-app.git
    cd rick-and-morty-app
 
-2. Create the database:
+2. Install the project dependencies:
+   ```bash
+   npm install
+   # or if you use yarn
+   yarn install
+
+3. Create the database:
    ```bash
    npx sequelize-cli db:create
 
-3. Run migrations:
+4. Run migrations:
    ```bash
    npx sequelize-cli db:migrate
 
