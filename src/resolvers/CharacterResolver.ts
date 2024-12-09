@@ -28,6 +28,7 @@ const resolvers = {
 
       // Save on redis 
       if (character) {
+        console.log('saving cache')
         await redis.set(cacheKey, JSON.stringify(character), "EX", 180);
       }
 
@@ -53,7 +54,7 @@ const resolvers = {
         .digest("hex");
       const cacheKey = `filterCharacters:${filtersHash}`;
 
-      // Verifica si ya existe un resultado en caché
+      // Verify Caché
       const cachedData = await redis.get(cacheKey);
       if (cachedData) {
         console.log("Cache hit: filterCharacters");

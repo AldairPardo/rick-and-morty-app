@@ -43,7 +43,7 @@ async function startServer() {
     }
   })();
 
-  // Configura el cron job para ejecutar initializeCharacters cada 12 horas
+  // Cron job to initialize characters every 12 hours
   cron.schedule("0 */12 * * *", async () => {
     console.log("Running cron job to initialize characters...");
     initializeCharacters();
