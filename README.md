@@ -38,13 +38,35 @@ This is a GraphQL API built with Express that allows searching for Rick and Mort
    git clone https://github.com/AldairPardo/rick-and-morty-app.git
    cd rick-and-morty-app
 
-2. Create the database:
+2. Install the project dependencies:
+   ```bash
+   npm install
+   # or if you use yarn
+   yarn install
+
+3. Create the database:
    ```bash
    npx sequelize-cli db:create
 
-3. Run migrations:
+4. Run migrations:
    ```bash
    npx sequelize-cli db:migrate
+   
+## **Prerequisites**  
+
+- **Redis**:  
+  The project uses Redis for caching. Ensure you have Redis installed and running locally or accessible on the specified host and port.  
+
+  Default Redis configuration:  
+  - **Host**: `localhost`  
+  - **Port**: `6379`  
+
+  To install Redis locally, follow the instructions for your operating system:  
+  - [Redis Installation Guide](https://redis.io/docs/getting-started/installation/)  
+
+  Start Redis with:  
+  ```bash
+  redis-server
 
 ## **Usage**
    ```bash
