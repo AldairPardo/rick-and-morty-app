@@ -13,6 +13,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      image: {
+        type: Sequelize.STRING
+      },
       status: {
         type: Sequelize.STRING
       },
@@ -24,6 +27,10 @@ module.exports = {
       },
       origin: {
         type: Sequelize.STRING
+      },
+      isFavorite: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
